@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load account socialaccount %}
+
+{% load crispy_forms_filters %}
+
+{% block title %} Sign In{% endblock title %}
+
+{% block body %}
+
+  <div class="text-center">
+    <h1>Sign In Here</h1>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+
+    <div class="socialaccount_ballot">
+
+      <div class="socialaccount_providers">
+        {% for provider in socialaccount_providers %}
+        <div class="my-2">
+          <a title="{{provider.name}}" class="socialaccount_provider btn btn-primary" 
+            href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">Sign in with {{provider.name}}</a>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="login-or border-top border-bottom py-2 my-4">OR</div>
+
+    </div>
+
+    {% else %}
+    <p>If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.</p>
+    {% endif %}
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-5 ">
+      <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div class="d-grid">
+            <button class=" mt-3 btn btn-dark" type="submit">Sign In</button><br>
+          </div>
+        </form>
+        <p>if you don't want to Sign In your existing third party accounts Please Sign Up here</p>
+        <div class="d-grid">
+          <button class=" mt-3 btn btn-dark" type="submit"><a class="text-white" href="{{ signup_url }}">sign up</a></button><br>
+        </div>
+    </div>
+  </div>
+
+{% endblock body %}

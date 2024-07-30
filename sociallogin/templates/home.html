@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="text-center">
+    <h2>This is Home Page</h2>
+    <h6>Hello <b>{{ user.first_name }}</b></h6>
+    <p>Username {{user}}</p>
+    {% comment %} <a class="btn btn-primary" href="{% url 'socialaccount_connections' %}">Go To Settings</a> {% endcomment %}
+</div>
+
+{% endblock body %}
